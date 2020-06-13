@@ -18,10 +18,14 @@ import {
 } from 'reactstrap'
 import { connect } from 'react-redux'
 import { actFetchAllBookDataRequest } from 'redux/actions/FetchBookData'
+import { actAddToCart } from 'redux/actions/Cart'
 
 class IndexProduct extends Component {
     componentDidMount(){
         this.props.fetchAllBook()
+    }
+    addToCart = book =>{
+        this.props.onAddToCart(book)
     }
     render() {
         var data = this.props.AllBook
@@ -38,7 +42,7 @@ class IndexProduct extends Component {
                                 <CardText className="card-text">{book.name}</CardText>
                                 <CardText className="card-text">{book.price} $</CardText>
                                 <CardText></CardText>
-                                <Button color="success" className="btn-icon btn-round">
+                                <Button onClick = {() => this.addToCart(book)} color="success" className="btn-icon btn-round">
                                     <i className="fa fa-shopping-cart"></i>
                                 </Button>
                             </CardBody>
@@ -110,60 +114,6 @@ class IndexProduct extends Component {
                     </UncontrolledDropdown>
                     <hr></hr>
                     <Row>
-                       {/* <Col>
-                            <Card style={{width: '20rem'}}>
-                                <CardImg 
-                                    top 
-                                    src="https://newsroom.smumn.edu/wp-content/uploads/2018/11/Romeo-Juliet-1050x675.jpg" 
-                                    alt="..."/>
-                                <CardBody>
-                                    <CardTitle><h3>Romeo & Juliet</h3></CardTitle>
-                                    <br></br>
-                                    <CardText className="card-text">Author: ...</CardText>
-                                    <CardText className="card-text">Price: ...$</CardText>
-                                    <CardText></CardText>
-                                    <Button color="success" className="btn-icon btn-round">
-                                        <i className="fa fa-shopping-cart"></i>
-                                    </Button>
-                                </CardBody>
-                            </Card>
-                       </Col>
-                       <Col>
-                            <Card style={{width: '20rem'}}>
-                                <CardImg 
-                                    top 
-                                    src="https://newsroom.smumn.edu/wp-content/uploads/2018/11/Romeo-Juliet-1050x675.jpg" 
-                                    alt="..."/>
-                                <CardBody>
-                                    <CardTitle><h3>Romeo & Juliet</h3></CardTitle>
-                                    <br></br>
-                                    <CardText className="card-text">Author: ...</CardText>
-                                    <CardText className="card-text">Price: ...$</CardText>
-                                    <CardText></CardText>
-                                    <Button color="success" className="btn-icon btn-round">
-                                        <i className="fa fa-shopping-cart"></i>
-                                    </Button>
-                                </CardBody>
-                            </Card>
-                       </Col>
-                       <Col>
-                            <Card style={{width: '20rem'}}>
-                                <CardImg 
-                                    top 
-                                    src="https://newsroom.smumn.edu/wp-content/uploads/2018/11/Romeo-Juliet-1050x675.jpg" 
-                                    alt="..."/>
-                                <CardBody>
-                                    <CardTitle><h3>Romeo & Juliet</h3></CardTitle>
-                                    <br></br>
-                                    <CardText className="card-text">Author: ...</CardText>
-                                    <CardText className="card-text">Price: ...$</CardText>
-                                    <CardText></CardText>
-                                    <Button color="success" className="btn-icon btn-round">
-                                        <i className="fa fa-shopping-cart"></i>
-                                    </Button>
-                                </CardBody>
-                            </Card>
-                       </Col> */}
                        {elm}
                     </Row>
                     </Container>
@@ -182,6 +132,9 @@ const mapDispatchToProps = dispatch =>{
     return {
         fetchAllBook : () =>{
             dispatch(actFetchAllBookDataRequest())
+        },
+        onAddToCart: (book)=>{
+            dispatch(actAddToCart(book,1))
         }
     }
 }
