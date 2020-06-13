@@ -13,6 +13,7 @@ import ProfilePage from "views/examples/ProfilePage.js";
 import RegisterPage from "views/examples/RegisterPage.js";
 import SectionLogin from "views/index-sections/SectionLogin";
 import IndexProduct from "views/Productpage/IndexProduct";
+import IndexCart from "views/CartPage/IndexCart";
 // others
 
 
@@ -35,10 +36,10 @@ export default class Home extends React.Component {
                     render={props => <LandingPage {...props} />}
                 />
                 <Route
-                    path="/profile-page"
+                    path="/cart-page"
                     // render={props => <ProfilePage {...props} />}
                 >
-                    <ProfilePage />
+                    <IndexCart />
                 </Route>
                 <Route
                     path="/register-page"
@@ -52,7 +53,10 @@ export default class Home extends React.Component {
                 <Route path= "/product-page">
                     <IndexProduct />
                 </Route>
-                <Redirect to="/index" />
+                <Route path="/profile-page" >
+                    <ProfilePage />
+                </Route>
+                <Redirect to="/" />
                 </Switch>
             </BrowserRouter>
         )

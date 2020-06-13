@@ -16,9 +16,35 @@ import {
     DropdownMenu,
     DropdownItem
 } from 'reactstrap'
+import { connect } from 'react-redux'
+import { actFetchAllBookDataRequest } from 'redux/actions/FetchBookData'
 
-export default class IndexProduct extends Component {
+class IndexProduct extends Component {
+    componentDidMount(){
+        this.props.fetchAllBook()
+    }
     render() {
+        var data = this.props.AllBook
+        const elm = data.map((book,index)=>{
+            return <Col key={book.bookID}>
+                        <Card style={{width: '20rem'}}>
+                            <CardImg 
+                                top 
+                                src={book.bookImage} 
+                                alt="..."/>
+                            <CardBody>
+                                <CardTitle><h3>{book.title}</h3></CardTitle>
+                                <br></br>
+                                <CardText className="card-text">{book.name}</CardText>
+                                <CardText className="card-text">{book.price} $</CardText>
+                                <CardText></CardText>
+                                <Button color="success" className="btn-icon btn-round">
+                                    <i className="fa fa-shopping-cart"></i>
+                                </Button>
+                            </CardBody>
+                        </Card>
+                </Col>
+        })
         return (
             <>
                 <IndexNavbar />
@@ -84,7 +110,7 @@ export default class IndexProduct extends Component {
                     </UncontrolledDropdown>
                     <hr></hr>
                     <Row>
-                       <Col>
+                       {/* <Col>
                             <Card style={{width: '20rem'}}>
                                 <CardImg 
                                     top 
@@ -137,7 +163,8 @@ export default class IndexProduct extends Component {
                                     </Button>
                                 </CardBody>
                             </Card>
-                       </Col>
+                       </Col> */}
+                       {elm}
                     </Row>
                     </Container>
                 </div>
@@ -145,3 +172,18 @@ export default class IndexProduct extends Component {
         )
     }
 }
+const mapStateToProps = state =>{
+    return {
+        AllBook : state.AllBook
+    }
+}
+
+const mapDispatchToProps = dispatch =>{
+    return {
+        fetchAllBook : () =>{
+            dispatch(actFetchAllBookDataRequest())
+        }
+    }
+}
+
+export default connect(mapStateToProps, mapDispatchToProps)(IndexProduct)

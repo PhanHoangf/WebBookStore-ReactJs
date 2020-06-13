@@ -35,7 +35,7 @@ import {
   Badge
   // NavLink
 } from "reactstrap";
-import { Link,NavLink } from "react-router-dom";
+import { Link} from "react-router-dom";
 
 function IndexNavbar() {
   const [navbarColor, setNavbarColor] = React.useState("navbar-transparent");
@@ -132,7 +132,7 @@ function IndexNavbar() {
               <Link
                 className="nav-link"
                 data-placement="bottom"
-                to= "/profile-page"
+                to= "/cart-page"
               >
                 <i className="fa fa-shopping-cart"></i>
                 Cart&nbsp;

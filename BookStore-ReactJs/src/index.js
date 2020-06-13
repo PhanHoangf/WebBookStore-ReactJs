@@ -32,6 +32,8 @@ import "assets/demo/demo.css";
 // import RegisterPage from "views/examples/RegisterPage.js";
 import Home from "Home";
 // others
+import {Provider} from "react-redux";
+import {store} from "./redux/store"
 
 ReactDOM.render(
   // <BrowserRouter>
@@ -61,6 +63,8 @@ ReactDOM.render(
   //     <Redirect to="/index" />
   //   </Switch>
   // </BrowserRouter>,
-  <Home />,
+  <Provider store={store}>
+    <Home />
+  </Provider>,
   document.getElementById("root")
 );
