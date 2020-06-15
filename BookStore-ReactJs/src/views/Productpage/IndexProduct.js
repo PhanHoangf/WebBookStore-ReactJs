@@ -39,8 +39,8 @@ class IndexProduct extends Component {
                             <CardBody>
                                 <CardTitle><h3>{book.title}</h3></CardTitle>
                                 <br></br>
-                                <CardText className="card-text">{book.name}</CardText>
-                                <CardText className="card-text">{book.price} $</CardText>
+                                <CardText className="card-text">Author: {book.name}</CardText>
+                                <CardText className="card-text">Price: {book.price} $</CardText>
                                 <CardText></CardText>
                                 <Button onClick = {() => this.addToCart(book)} color="success" className="btn-icon btn-round">
                                     <i className="fa fa-shopping-cart"></i>

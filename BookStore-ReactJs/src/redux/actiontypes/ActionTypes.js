@@ -1,2 +1,3 @@
-export const FETCH_BOOKDATA = "FETCH_BOOKDATA"
-export const ADD_TO_CART = "ADD_TO_CART"
+export const FETCH_BOOKDATA = "FETCH_BOOKDATA";
+export const ADD_TO_CART = "ADD_TO_CART";
+export const UPDATE_QUANTITY = "UPDATE_QUANTITY"

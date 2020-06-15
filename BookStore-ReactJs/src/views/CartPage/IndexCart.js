@@ -1,16 +1,39 @@
 import React, { Component } from 'react'
 import IndexNavbar from 'components/Navbars/IndexNavbar'
 import ProfilePageHeader from 'components/Headers/ProfilePageHeader'
-import { Container, Row, Col, Button, Nav, NavItem, TabContent, TabPane, FormGroup, Label, Input,NavLink, Table, Alert } from 'reactstrap';
+import { Container, Button, Nav, NavItem, TabContent,NavLink, Table, Alert, Badge } from 'reactstrap';
 import { connect } from 'react-redux';
+import { actUpdateQuantity } from 'redux/actions/Cart';
+import BookCart from 'redux/reducers/BookCart';
 
 
 class IndexCart extends Component {
     constructor(props){
         super(props)
         this.state = {
-            activeTab : '1'
+            activeTab : '1',
+            quantity:1
         }
+    }
+    UpdateQuantity = (quantity,book) =>{
+        if(quantity > 0){
+            this.setState({
+                quantity : quantity
+            })
+            this.props.onUpdateQuantity(quantity, book)
+        }
+    }
+    ShowSubTotal = (quantity,price) =>{
+        return quantity * price
+    }
+    ShowTotal = (BookCart) =>{
+        var total = 0
+        if(BookCart.length > 0){
+            for(let i = 0; i<BookCart.length; i++){
+                total += BookCart[i].quantity * BookCart[i].book.price
+            }
+        }
+        return total
     }
     render() {
         const toggle = tab =>{
@@ -63,8 +86,8 @@ class IndexCart extends Component {
                     </div>
                     {/* Tab panes */}
                         <TabContent className="following" activeTab={this.state.activeTab}>
-                                <Alert color="info">
-                                    You don't have any products yet!!
+                                <Alert color="danger" style={{textAlign:'center'}}>
+                                    <b>You don't have any products yet!!</b>
                                 </Alert>
                         </TabContent>
                     </Container>
@@ -74,20 +97,38 @@ class IndexCart extends Component {
         }
         else{
            const elm =  BookCart.map((book, index)=>{
-                return <tbody key={index}>
+                return <tbody key={book.book.bookID} style={{verticalAlign:"middle"}} >
                         <tr>
-                        <th scope="row">1</th>
-                        <td>
+                        <th scope="row" style={{verticalAlign:"middle"}}>{index+1}</th>
+                        <td style={{verticalAlign:"middle"}} >
                             <img
                                 alt="..."
                                 className="img-rounded img-no-padding img-responsive"
-                                src=""
+                                src={book.book.bookImage}
                             />
                         </td>
-                        <td></td>
-                        <td>Mark</td>
-                        <td>Otto</td>
-                        <td>@mdo</td>
+                        <td style={{verticalAlign:"middle"}}>{book.book.title}</td>
+                        <td style={{verticalAlign:"middle"}}>{ this.ShowSubTotal(book.book.price, book.quantity) } $</td>
+                        <td style={{verticalAlign:"middle"}}>
+                            <Button 
+                                className="btn-round btn-icon"  
+                                size="sm" 
+                                onClick = { ()=>this.UpdateQuantity( book.quantity + 1, book.book ) }
+                            >
+                                <i className="fa fa-plus-circle" />
+                            </Button>&nbsp;
+                            {book.quantity} &nbsp;
+                            <Button 
+                                className="btn-round btn-icon"  
+                                size="sm"
+                                onClick= { ()=>this.UpdateQuantity( book.quantity - 1, book.book ) }
+                            >
+                                <i className="fa fa-minus-circle" />
+                            </Button>
+                        </td>
+                        <td style={{verticalAlign:"middle"}}>
+                            <Button color="danger" size="sm"> Xóa </Button>
+                        </td>
                         </tr>
                     </tbody>
             })
@@ -146,6 +187,9 @@ class IndexCart extends Component {
                                     {elm}
                                 </Table>
                             </TabContent>
+                            <Button color="primary">
+                                Total <h3><Badge color="default">{this.ShowTotal(BookCart)} $</Badge></h3>
+                            </Button>
                         </Container>
                     </div>
                 </>
@@ -159,7 +203,13 @@ const mapStateToProps = state =>{
         BookCart: state.BookCart
     }
 }
+const mapDispatchToProps = dispatch =>{
+    return {
+        onUpdateQuantity: (quantity, book) =>{
+            return dispatch(actUpdateQuantity(quantity, book));
+        }
+    }
+}
 
 
-
-export default connect(mapStateToProps, null)(IndexCart)
+export default connect(mapStateToProps, mapDispatchToProps)(IndexCart)

@@ -1,4 +1,5 @@
 import { ADD_TO_CART } from "redux/actiontypes/ActionTypes"
+import { UPDATE_QUANTITY } from "redux/actiontypes/ActionTypes";
 
 
 const initialState=[]
@@ -18,6 +19,12 @@ export default function BookCart( state = initialState, action ){
                     quantity
                 })
             }
+            return [...state];
+        case UPDATE_QUANTITY:
+            index = findIndex(state, book)
+            if(index !== -1){
+                state[index].quantity = quantity
+            }
             return [...state]
         default:
             return [...state];
@@ -28,7 +35,7 @@ const findIndex = (BookCart, book) =>{
     var index = -1;
     if(BookCart.length > 0){
         for(let i=0; i<BookCart.length; i++){
-            if(BookCart[i].book.bookID == book.bookID){
+            if(BookCart[i].book.bookID === book.bookID){
                 index = i;
                 break;
             }
