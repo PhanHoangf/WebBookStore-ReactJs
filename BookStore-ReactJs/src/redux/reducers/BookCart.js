@@ -1,5 +1,6 @@
 import { ADD_TO_CART } from "redux/actiontypes/ActionTypes"
 import { UPDATE_QUANTITY } from "redux/actiontypes/ActionTypes";
+import { DELETE_FROM_CART } from "redux/actiontypes/ActionTypes";
 
 
 const initialState=[]
@@ -24,6 +25,12 @@ export default function BookCart( state = initialState, action ){
             index = findIndex(state, book)
             if(index !== -1){
                 state[index].quantity = quantity
+            }
+            return [...state];
+        case DELETE_FROM_CART:
+            index = findIndex(state, book)
+            if(index !== -1){
+                state.splice(index,1)
             }
             return [...state]
         default:

@@ -4,7 +4,8 @@ import ProfilePageHeader from 'components/Headers/ProfilePageHeader'
 import { Container, Button, Nav, NavItem, TabContent,NavLink, Table, Alert, Badge } from 'reactstrap';
 import { connect } from 'react-redux';
 import { actUpdateQuantity } from 'redux/actions/Cart';
-import BookCart from 'redux/reducers/BookCart';
+import { actDeleteFromCart } from 'redux/actions/Cart';
+import DemoFooter from 'components/Footers/DemoFooter';
 
 
 class IndexCart extends Component {
@@ -34,6 +35,10 @@ class IndexCart extends Component {
             }
         }
         return total
+    }
+    DeleteFromCart = (book) => {
+        console.log(book)
+        this.props.onDelete(book);
     }
     render() {
         const toggle = tab =>{
@@ -92,6 +97,7 @@ class IndexCart extends Component {
                         </TabContent>
                     </Container>
                 </div>
+                <DemoFooter />
             </>
             )
         }
@@ -127,7 +133,11 @@ class IndexCart extends Component {
                             </Button>
                         </td>
                         <td style={{verticalAlign:"middle"}}>
-                            <Button color="danger" size="sm"> Xóa </Button>
+                            <Button 
+                                color="danger" 
+                                size="sm"
+                                onClick = {()=>this.DeleteFromCart(book.book)}
+                            > Xóa </Button>
                         </td>
                         </tr>
                     </tbody>
@@ -187,11 +197,13 @@ class IndexCart extends Component {
                                     {elm}
                                 </Table>
                             </TabContent>
+                            <hr></hr>
                             <Button color="primary">
                                 Total <h3><Badge color="default">{this.ShowTotal(BookCart)} $</Badge></h3>
                             </Button>
                         </Container>
                     </div>
+                    <DemoFooter />
                 </>
             )
         }
@@ -207,6 +219,9 @@ const mapDispatchToProps = dispatch =>{
     return {
         onUpdateQuantity: (quantity, book) =>{
             return dispatch(actUpdateQuantity(quantity, book));
+        },
+        onDelete:(book) =>{
+            return dispatch(actDeleteFromCart(book))
         }
     }
 }

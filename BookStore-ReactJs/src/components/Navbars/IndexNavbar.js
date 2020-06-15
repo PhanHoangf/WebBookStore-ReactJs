@@ -22,22 +22,30 @@ import classnames from "classnames";
 // reactstrap components
 import {
   Collapse,
-  NavbarBrand,
   Navbar,
   NavItem,
   Nav,
   Container,
-  Dropdown,
-  DropdownToggle,
-  DropdownMenu,
-  DropdownItem,
-  UncontrolledDropdown,
   Badge
   // NavLink
 } from "reactstrap";
 import { Link} from "react-router-dom";
+import { connect } from "react-redux";
 
-function IndexNavbar() {
+// helper function
+const ShowQuantity = (cart) =>{
+	var result = 0;
+	if(cart.length > 0){
+		for(let i=0; i<cart.length; i++){
+			result += cart[i].quantity
+		}
+	}
+	return result;
+}
+
+function IndexNavbar(props) {
+  var {BookCart} = props
+  var quantity = ShowQuantity(BookCart);
   const [navbarColor, setNavbarColor] = React.useState("navbar-transparent");
   const [navbarCollapse, setNavbarCollapse] = React.useState(false);
 
@@ -136,7 +144,7 @@ function IndexNavbar() {
               >
                 <i className="fa fa-shopping-cart"></i>
                 Cart&nbsp;
-                <Badge>4</Badge>
+                <Badge color="danger">{quantity}</Badge>
               </Link>
             </NavItem>
           </Nav>
@@ -146,4 +154,10 @@ function IndexNavbar() {
   );
 }
 
-export default IndexNavbar;
+const mapStateToProps = state =>{
+    return {
+        BookCart : state.BookCart
+    }
+}
+
+export default connect(mapStateToProps,null)(IndexNavbar);

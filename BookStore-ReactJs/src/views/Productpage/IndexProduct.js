@@ -19,6 +19,7 @@ import {
 import { connect } from 'react-redux'
 import { actFetchAllBookDataRequest } from 'redux/actions/FetchBookData'
 import { actAddToCart } from 'redux/actions/Cart'
+import DemoFooter from 'components/Footers/DemoFooter'
 
 class IndexProduct extends Component {
     componentDidMount(){
@@ -118,6 +119,7 @@ class IndexProduct extends Component {
                     </Row>
                     </Container>
                 </div>
+                <DemoFooter />
             </>
         )
     }
