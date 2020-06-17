@@ -21,7 +21,7 @@ module.exports = {
         )
     },
     getUser: callback =>{
-        pool.query('SELECT accountID,userName,displayName,phoneNumber from account',[],
+        pool.query('SELECT * from account',[],
         (err,results,fields)=>{
             if(err)
             {
@@ -29,6 +29,18 @@ module.exports = {
             }
             return callback(null,results)
         }
+        )
+    },
+    getUserByUsername: (username, callback) =>{
+        pool.query(
+            'SELECT *from `account` where userName = ?'
+            ,[username],
+            (err, results) =>{
+                if(err){
+                    return callback(err);
+                }
+                return callback(null, results[0])
+            }
         )
     }
 }

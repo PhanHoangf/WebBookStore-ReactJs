@@ -83,7 +83,7 @@ class IndexCart extends Component {
                                 style = {{fontSize:'20px',fontWeight:'bold'}}
                             >
                                 <i className="fa fa-shopping-cart"></i>&nbsp;
-                                Giỏ hàng
+                                Cart
                             </NavLink>
                             </NavItem>
                         </Nav>
@@ -175,7 +175,7 @@ class IndexCart extends Component {
                                     style = {{fontSize:'20px',fontWeight:'bold'}}
                                 >
                                     <i className="fa fa-shopping-cart"></i>&nbsp;
-                                    Giỏ hàng
+                                    Cart
                                 </NavLink>
                                 </NavItem>
                             </Nav>

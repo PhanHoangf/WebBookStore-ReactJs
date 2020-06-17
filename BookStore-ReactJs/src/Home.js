@@ -14,6 +14,7 @@ import RegisterPage from "views/examples/RegisterPage.js";
 import SectionLogin from "views/index-sections/SectionLogin";
 import IndexProduct from "views/Productpage/IndexProduct";
 import IndexCart from "views/CartPage/IndexCart";
+import IndexAdmin from "views/AdminPage/IndexAdmin";
 // others
 
 
@@ -55,6 +56,9 @@ export default class Home extends React.Component {
                 </Route>
                 <Route path="/profile-page" >
                     <ProfilePage />
+                </Route>
+                <Route path = "/admin-page">
+                    <IndexAdmin />
                 </Route>
                 <Redirect to="/" />
                 </Switch>

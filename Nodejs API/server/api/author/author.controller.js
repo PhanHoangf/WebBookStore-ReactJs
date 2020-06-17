@@ -8,7 +8,7 @@ module.exports = {
                 return;
             }
             return  res.json({
-                success: 1,
+                success: 200,
                 data: results
             });
         })

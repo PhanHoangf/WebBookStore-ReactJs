@@ -20,11 +20,47 @@ import { connect } from 'react-redux'
 import { actFetchAllBookDataRequest } from 'redux/actions/FetchBookData'
 import { actAddToCart } from 'redux/actions/Cart'
 import DemoFooter from 'components/Footers/DemoFooter'
+import { createRegularExpressionLiteral } from 'typescript'
+
 
 class IndexProduct extends Component {
+    constructor(props){
+        super(props)
+        this.state = {    
+            Quotes:[
+                {
+                    id:1,
+                    Quote: "“Many people, myself among them, feel better at the mere sight of a book.”",
+                    Author: "- Jane Smiley -"
+                },
+                {
+                    id:2,
+                    Quote: "“′Classic′ – a book which people praise and don’t read.”",
+                    Author: "- Mark Twain -"
+                },
+                {
+                    id:3,
+                    Quote: "“Sleep is good, he said, and books are better.”",
+                    Author: "- George R.R. Martin -"
+                },
+                {
+                    id:4,
+                    Quote: "“The library is inhabited by spirits that come out of the pages at night.”",
+                    Author: "- Isabel Allende -"
+                },
+                {
+                    id:5,
+                    Quote: "“Rainy days should be spent at home with a cup of tea and a good book.”",
+                    Author: "- Bill Patterson -"
+                }
+            ]
+        }
+    }
     componentDidMount(){
         this.props.fetchAllBook()
     }
+
+
     addToCart = book =>{
         this.props.onAddToCart(book)
     }
@@ -72,17 +108,7 @@ class IndexProduct extends Component {
                     </div>
                     <Row>
                         <Col className="ml-auto mr-auto text-center" md="6">
-                        <p>
-                            “′Classic′ – a book which people praise and don’t read.” <strong>- Mark Twain</strong>
-                        </p>
-                        <p>
-                            “Sleep is good, he said, and books are better.”
-                            <strong>– George R.R. Martin</strong>
-                        </p>
-                        <p>
-                            “Books are the quietest and most constant of friends; they are the most accessible and wisest of counselors, and the most patient of teachers.”
-                            <strong>-Charles W. Eliot</strong>
-                        </p>
+                        {RandomQoutes(this.state.Quotes)}
                         <br />
                         </Col>
                     </Row>
@@ -124,6 +150,19 @@ class IndexProduct extends Component {
         )
     }
 }
+
+const RandomQoutes = (store) =>{
+    var result = null;
+    if(store.length > 0){
+        var rand = Math.floor((Math.random() * store.length) + 0);
+        result = store[rand];
+    }
+    return  <p key={result.id}>
+                {result.Quote}<br />
+                <strong> {result.Author} </strong>
+            </p>
+}
+
 const mapStateToProps = state =>{
     return {
         AllBook : state.AllBook
