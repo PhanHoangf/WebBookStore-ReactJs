@@ -47,6 +47,7 @@ class IndexAdmin extends Component {
                             alt="..."
                             className="img-rounded img-no-padding img-responsive"
                             src={book.bookImage}
+                            style={{height:"88.96px",width:"70px"}}
                         />
                     </td>
                     <td style={{verticalAlign:"middle"}}>{book.title}</td>

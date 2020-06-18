@@ -1,79 +1,92 @@
-/*!
+	import React from "react";
 
-=========================================================
-* Paper Kit React - v1.0.0
-=========================================================
+	// reactstrap components
+	import {
+	Button,
+	Card,
+	Form,
+	Input,
+	InputGroupAddon,
+	InputGroupText,
+	InputGroup,
+	Container,
+	Row,
+	Col,
+	} from "reactstrap";
+	import IndexNavbar from "components/Navbars/IndexNavbar";
+	import { connect } from "react-redux";
+	import CallApi from "Utils/ApiCaller";
+	import { Redirect } from "react-router";
+import IndexAdmin from "views/AdminPage/IndexAdmin";
 
-* Product Page: https://www.creative-tim.com/product/paper-kit-react
+	// core components
 
-* Copyright 2019 Creative Tim (https://www.creative-tim.com)
-* Licensed under MIT (https://github.com/creativetimofficial/paper-kit-react/blob/master/LICENSE.md)
-
-* Coded by Creative Tim
-
-=========================================================
-
-* The above copyright notice and this permission notice shall be included in all copies or substantial portions of the Software.
-
-*/
-import React from "react";
-
-// reactstrap components
-import {
-  Button,
-  Card,
-  Form,
-  Input,
-  InputGroupAddon,
-  InputGroupText,
-  InputGroup,
-  Container,
-  Row,
-  Col
-} from "reactstrap";
-import IndexNavbar from "components/Navbars/IndexNavbar";
-import { connect } from "react-redux";
-import CallApi from "Utils/ApiCaller";
-import { Redirect } from "react-router";
-
-// core components
-
-class SectionLogin extends React.Component {
-	constructor(props){
-		super(props)
+	class SectionLogin extends React.Component {
+	constructor(props) {
+		super(props);
 		this.state = {
-			txtName:'',
-			txtPassword:'',
-			isRedirect: false
-		}
+		txtName: "",
+		txtPassword: "",
+		isRedirect: false,
+		};
 	}
-	onChange = e =>{
+	onChange = (e) => {
 		var target = e.target;
 		var name = target.name;
 		var value = target.value;
 		this.setState({
-			[name]: value
+		[name]: value,
 		});
-	}
-	onHandleSubmit = e =>{
+	};
+	onHandleSubmit = (e) => {
 		e.preventDefault();
-		CallApi('users/login', 'POST',{
+		CallApi("users/login", "POST", {
 			username: this.state.txtName,
 			password: this.state.txtPassword
-		}).then(res =>{
-			if(res.data.message === "login Successfully"){
+		}).then((res) => {
+			console.log(res)
+			if(res.data.token){
+				if(this.state.txtName==="admin"){
+					localStorage.setItem("admin",JSON.stringify({
+						username: this.state.txtName,
+						password: this.state.txtPassword
+					}));
+				}
+				else {
+					localStorage.setItem("user",JSON.stringify({
+						username: this.state.txtName,
+						password: this.state.txtPassword
+					}));
+				}
 				this.setState({
-					isRedirect:true
-				})
+					isRedirect: true
+				});
 			}
-		})
-		
-	
+			else {
+				alert(res.data.data)
+			}
+		});
+	};
+	componentWillUnmount(){
+		if(localStorage){
+			localStorage.removeItem("admin")
+			localStorage.removeItem("user")
+		}
 	}
 	render() {
-		var { txtName, txtPassword } = this.state
-		if (this.state.isRedirect === true){
-			return <Redirect to="/admin-page" />
+		var { txtName, txtPassword, isRedirect } = this.state;
+		var admin = JSON.parse(localStorage.getItem("admin"));
+		
+		console.log(admin)
+		if(isRedirect){
+			if(admin){
+				if(admin.username === "admin"){
+					return <Redirect to="/admin-page"></Redirect>
+				}
+			}
+			else{
+				return <Redirect to = "/product-page"></Redirect>
+			}
 		}
 		return (
 		<>
@@ -81,7 +94,8 @@ class SectionLogin extends React.Component {
 			<div
 			className="section section-image section-login"
 			style={{
-				backgroundImage: "url(" + require("assets/img/login-image.jpg") + ")"
+				backgroundImage:
+				"url(" + require("assets/img/login-image.jpg") + ")",
 			}}
 			>
 			<Container>
@@ -94,7 +108,7 @@ class SectionLogin extends React.Component {
 						className="btn-neutral btn-just-icon mt-0"
 						color="facebook"
 						href="#pablo"
-						onClick={e => e.preventDefault()}
+						onClick={(e) => e.preventDefault()}
 						>
 						<i className="fa fa-facebook-square" />
 						</Button>
@@ -102,7 +116,7 @@ class SectionLogin extends React.Component {
 						className="btn-neutral btn-just-icon mt-0 ml-1"
 						color="google"
 						href="#pablo"
-						onClick={e => e.preventDefault()}
+						onClick={(e) => e.preventDefault()}
 						>
 						<i className="fa fa-google-plus" />
 						</Button>
@@ -110,12 +124,15 @@ class SectionLogin extends React.Component {
 						className="btn-neutral btn-just-icon mt-0 ml-1"
 						color="twitter"
 						href="#pablo"
-						onClick={e => e.preventDefault()}
+						onClick={(e) => e.preventDefault()}
 						>
 						<i className="fa fa-twitter" />
 						</Button>
 					</div>
-					<Form onSubmit = {this.onHandleSubmit} className="register-form">
+					<Form
+						onSubmit={this.onHandleSubmit}
+						className="register-form"
+					>
 						<label>Username</label>
 						<InputGroup className="form-group-no-border">
 						<InputGroupAddon addonType="prepend">
@@ -123,12 +140,12 @@ class SectionLogin extends React.Component {
 							<i className="fa fa-user" />
 							</InputGroupText>
 						</InputGroupAddon>
-						<Input 
-							placeholder="username" 
+						<Input
+							placeholder="username"
 							type="text"
 							name="txtName"
-							value={ txtName }
-						    onChange = { this.onChange }
+							value={txtName}
+							onChange={this.onChange}
 						/>
 						</InputGroup>
 						<label>Password</label>
@@ -138,12 +155,12 @@ class SectionLogin extends React.Component {
 							<i className="nc-icon nc-key-25" />
 							</InputGroupText>
 						</InputGroupAddon>
-						<Input 
-							placeholder="Password" 
+						<Input
+							placeholder="Password"
 							type="password"
 							name="txtPassword"
-							value={ txtPassword }
-							onChange= { this.onChange } 
+							value={txtPassword}
+							onChange={this.onChange}
 						/>
 						</InputGroup>
 						<Button
@@ -160,7 +177,7 @@ class SectionLogin extends React.Component {
 						className="btn-link"
 						color="danger"
 						href="#pablo"
-						onClick={e => e.preventDefault()}
+						onClick={(e) => e.preventDefault()}
 						>
 						Forgot password?
 						</Button>
@@ -177,14 +194,14 @@ class SectionLogin extends React.Component {
 			</div>
 			</div>{" "}
 		</>
-		)
-	};
-}
-
-const mapStateToProps = state =>{
-	return {
-		user: state.User
+		);
 	}
-}
+	}
 
-export default connect(mapStateToProps,null)(SectionLogin);
+	const mapStateToProps = (state) => {
+	return {
+		user: state.User,
+	};
+	};
+
+	export default connect(mapStateToProps, null)(SectionLogin);
