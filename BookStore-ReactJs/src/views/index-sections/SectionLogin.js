@@ -17,7 +17,6 @@
 	import { connect } from "react-redux";
 	import CallApi from "Utils/ApiCaller";
 	import { Redirect } from "react-router";
-import IndexAdmin from "views/AdminPage/IndexAdmin";
 
 	// core components
 
@@ -30,6 +29,12 @@ import IndexAdmin from "views/AdminPage/IndexAdmin";
 		isRedirect: false,
 		};
 	}
+	// componentWillUnmount(){
+	// 	if(localStorage){
+	// 		localStorage.removeItem("admin")
+	// 		localStorage.removeItem("user")
+	// 	};
+	// }
 	onChange = (e) => {
 		var target = e.target;
 		var name = target.name;
@@ -44,20 +49,11 @@ import IndexAdmin from "views/AdminPage/IndexAdmin";
 			username: this.state.txtName,
 			password: this.state.txtPassword
 		}).then((res) => {
-			console.log(res)
 			if(res.data.token){
-				if(this.state.txtName==="admin"){
-					localStorage.setItem("admin",JSON.stringify({
-						username: this.state.txtName,
-						password: this.state.txtPassword
-					}));
-				}
-				else {
-					localStorage.setItem("user",JSON.stringify({
-						username: this.state.txtName,
-						password: this.state.txtPassword
-					}));
-				}
+				localStorage.setItem("admin",JSON.stringify({
+					username: this.state.txtName,
+					password: this.state.txtPassword
+				}));
 				this.setState({
 					isRedirect: true
 				});
@@ -67,22 +63,13 @@ import IndexAdmin from "views/AdminPage/IndexAdmin";
 			}
 		});
 	};
-	componentWillUnmount(){
-		if(localStorage){
-			localStorage.removeItem("admin")
-			localStorage.removeItem("user")
-		}
-	}
+	
 	render() {
 		var { txtName, txtPassword, isRedirect } = this.state;
 		var admin = JSON.parse(localStorage.getItem("admin"));
-		
-		console.log(admin)
 		if(isRedirect){
-			if(admin){
-				if(admin.username === "admin"){
-					return <Redirect to="/admin-page"></Redirect>
-				}
+			if(admin.username === "admin"){
+				return <Redirect to="/admin-page"></Redirect>
 			}
 			else{
 				return <Redirect to = "/product-page"></Redirect>
@@ -199,9 +186,9 @@ import IndexAdmin from "views/AdminPage/IndexAdmin";
 	}
 
 	const mapStateToProps = (state) => {
-	return {
-		user: state.User,
-	};
+		return {
+			user: state.User,
+		};
 	};
 
 	export default connect(mapStateToProps, null)(SectionLogin);
