@@ -29,12 +29,6 @@
 		isRedirect: false,
 		};
 	}
-	// componentWillUnmount(){
-	// 	if(localStorage){
-	// 		localStorage.removeItem("admin")
-	// 		localStorage.removeItem("user")
-	// 	};
-	// }
 	onChange = (e) => {
 		var target = e.target;
 		var name = target.name;
