@@ -20,7 +20,6 @@ import { connect } from 'react-redux'
 import { actFetchAllBookDataRequest } from 'redux/actions/FetchBookData'
 import { actAddToCart } from 'redux/actions/Cart'
 import DemoFooter from 'components/Footers/DemoFooter'
-import { createRegularExpressionLiteral } from 'typescript'
 
 
 class IndexProduct extends Component {
