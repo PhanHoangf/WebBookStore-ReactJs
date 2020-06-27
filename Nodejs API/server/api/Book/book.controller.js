@@ -1,5 +1,5 @@
-const { getBook, createBook, updateBook, deleteBook } = require('./book.services');
-const bookdb = require('./book.services');
+const { getBook, createBook, updateBook, deleteBook, searchBook } = require('./book.services');
+const { isEmpty } = require('lodash')
 
 const bookController = {}
 
@@ -59,9 +59,29 @@ bookController.deleteBook = (req, res) =>{
                 message: "Record not found"
             });
         }
-        return  res.json({
+        return res.json({
             success: 1,
             message: "book deleted successfully"
+        });
+    })
+}
+
+bookController.searchBook = (req, res) => {
+    const body = req.body
+    searchBook(body, (err, results)=>{
+        if(err){
+            console.log(err)
+            return;
+        }
+        if(isEmpty(results[0])){
+            return res.status(200).json({
+                success: 0,
+                message: "Record not found"
+            });
+        }
+        return res.status(200).json({
+            success: 1,
+            data: results[0]
         });
     })
 }

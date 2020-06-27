@@ -10,6 +10,9 @@ const schema =  {
         numberOfPages: Joi.required(),
         bookImage: Joi.required(),
         bookID: Joi.required()
+    }),
+    searchBook: Joi.object({
+        keyWord: Joi.string().required()
     })
 }
 

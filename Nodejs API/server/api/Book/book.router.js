@@ -1,9 +1,13 @@
-const {getBook, createBook, updateBook, deleteBook} = require('./book.controller')
+const {getBook, createBook, updateBook, deleteBook, searchBook} = require('./book.controller')
+const { updateBookValidation, searchBookValidation } = require("../../../validation/books/book.validation")
+
 const express = require('express');
 const router = express.Router();
-const { updateBookValidation } = require("../../../validation/books/book.validation")
+
 
 router.get('/', getBook);
+router.get('/findbook', searchBookValidation, searchBook);
+
 router.post('/', createBook);
 router.patch('/',updateBookValidation,updateBook);
 router.delete('/', deleteBook);

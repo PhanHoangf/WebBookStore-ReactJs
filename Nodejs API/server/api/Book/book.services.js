@@ -66,4 +66,17 @@ bookdb.deleteBook = (data, callback) =>{
     )
 }
 
+bookdb.searchBook = (data, callback) => {
+    pool.query(
+        "CALL find_book(?)",
+        [data.keyWord],
+        (err, results, fields) => {
+            if(err){
+                return callback(err)
+            }
+            return callback(null, results)
+        }
+    )
+}
+
 module.exports = bookdb
