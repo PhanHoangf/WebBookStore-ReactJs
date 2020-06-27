@@ -1,4 +1,5 @@
-const { getBook, createBook, updateBook } = require('./book.services')
+const { getBook, createBook, updateBook, deleteBook } = require('./book.services');
+const bookdb = require('./book.services');
 
 const bookController = {}
 
@@ -45,5 +46,23 @@ bookController.updateBook = (req, res) => {
         });
     })
 }
-
+bookController.deleteBook = (req, res) =>{
+    const body = req.body
+    deleteBook(body, (err, results)=>{
+        if(err){
+            console.log(err);
+            return;
+        }
+        if(!results){
+            return  res.json({
+                success: 0,
+                message: "Record not found"
+            });
+        }
+        return  res.json({
+            success: 1,
+            message: "book deleted successfully"
+        });
+    })
+}
 module.exports = bookController

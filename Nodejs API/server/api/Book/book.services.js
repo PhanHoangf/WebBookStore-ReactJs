@@ -54,4 +54,16 @@ bookdb.updateBook = (data, callback)=>{
     )
 }
 
+bookdb.deleteBook = (data, callback) =>{
+    pool.query('DELETE FROM book WHERE bookID = ?',
+        [data.id],
+        (err, results, fields) =>{
+            if(err){
+                return callback(err)
+            }
+            return callback(null, results[0])
+        }
+    )
+}
+
 module.exports = bookdb
