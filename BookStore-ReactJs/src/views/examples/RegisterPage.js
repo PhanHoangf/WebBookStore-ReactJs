@@ -84,23 +84,27 @@ class RegisterPage extends React.Component {
     var isUsernameAvailable = checkUsername(txtUsername, this.props.User)
 
     var isCorrect = checkPass(txtPassword, txtPassword_confirmation)
-    if(isCorrect === true && isUsernameAvailable === true){
-        const user = {
-        user_name: txtUsername,
-        password: txtPassword,
-        display_name: txtDisplayName,
-        phone_number: txtPhoneNumber,
-        role: txtRole,
-        };
-        CallApi("users/registrations", "POST", user).then(res => {
-            if(res.status(200)){
+    if(isUsernameAvailable === true){
+      if(isCorrect === true){
+          const user = {
+          user_name: txtUsername,
+          password: txtPassword,
+          display_name: txtDisplayName,
+          phone_number: txtPhoneNumber,
+          role: txtRole,
+          };
+          CallApi("users/registrations", "POST", user).then(res => {
+              if(res.data.success === 1){
                 alert("Registration success!!!")
-            }
-            else alert("Failed!!!")
-        });
+              }
+          });
+      }
+      else {
+          alert("Password incorrect")
+      }
     }
     else {
-         alert("Password incorrect or Username are not Available")
+      alert('Unavailable Username')
     }
   };
   render() {
@@ -252,7 +256,6 @@ const checkUsername = (name1, listName) =>{
             if(listName[i].userName === name1){
                 return false
             }
-            else continue
         }
     }
     return true
