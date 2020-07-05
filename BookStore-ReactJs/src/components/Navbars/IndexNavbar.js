@@ -36,6 +36,8 @@ import { Link } from "react-router-dom";
 import { connect } from "react-redux";
 import { actLogout } from "redux/actions/FetchUserData";
 import jwt from 'jsonwebtoken'
+import { reloadCart } from "redux/actions/Cart";
+import { isEmpty } from "lodash";
 // helper function
 const ShowQuantity = (cart) => {
   var result = 0;
@@ -50,9 +52,11 @@ const ShowQuantity = (cart) => {
 const ShowUser = () => {
   var userName = "Guest";
   if (localStorage.length > 0) {
+        if(localStorage.getItem('jwtToken') !== null ){
         var data = localStorage.getItem('jwtToken')
         var user = jwt.decode(data).result
         userName = user.displayName;
+      }
         return `Hello ${userName}`
   }
   return userName
@@ -63,15 +67,23 @@ const ShowUser = () => {
 function IndexNavbar(props) {
   var { BookCart } = props;
   var quantity = ShowQuantity(BookCart);
-
+  
   const [navbarColor, setNavbarColor] = React.useState("navbar-transparent");
   const [navbarCollapse, setNavbarCollapse] = React.useState(false);
-  const [isChange, setChange] = React.useState(false)
-
+  const [isChange, setChange] = React.useState(false);
+  const [isReload, setReload] = React.useState(false);
+  
   const onclicked = () =>{
     props.actLogOut()
     setChange(!isChange);
+    window.location.reload(false);
   }
+
+  const updateState = (params) =>{
+    if(localStorage.getItem('jwtToken') !== null){
+      setReload(params)
+    }
+  };
   
   const toggleNavbarCollapse = () => {
     setNavbarCollapse(!navbarCollapse);
@@ -79,6 +91,7 @@ function IndexNavbar(props) {
   };
 
   React.useEffect(() => {
+
     const updateNavbarColor = () => {
       if (
         document.documentElement.scrollTop > 299 ||
@@ -92,12 +105,20 @@ function IndexNavbar(props) {
         setNavbarColor("navbar-transparent");
       }
     };
-
+    if(isEmpty(BookCart) && isReload === false ){
+      props.actReloadBookCart()
+      setReload(true)
+    }
+    else {
+      return;
+    }
     window.addEventListener("scroll", updateNavbarColor);
 
     return function cleanup() {
       window.removeEventListener("scroll", updateNavbarColor);
     };
+
+   
   });
   return (
     <Navbar className={classnames("fixed-top", navbarColor)} expand="lg">
@@ -167,10 +188,11 @@ function IndexNavbar(props) {
                             className="dropdown-item"
                             data-placement="bottom"
                             to="/login-page"
-                            style = { ( localStorage.length > 0 ) ? { pointerEvents: "none" } : {} }
+                            style = { ( localStorage.getItem('jwtToken') !== null ) ? { pointerEvents: "none" } : {} }
                         >
                             Login
                         </Link>
+                        {LinkToAdminPage()}
                         <DropdownItem
                             onClick={onclicked}
                         >
@@ -206,6 +228,25 @@ function IndexNavbar(props) {
   );
 }
 
+const LinkToAdminPage = () =>{
+    if(localStorage.length > 0){
+      if(localStorage.getItem('jwtToken') !== null){
+        var data = localStorage.getItem('jwtToken')
+        var user = jwt.decode(data).result
+        if(user.role === 1){
+          return  <Link
+                      className="dropdown-item"
+                      data-placement="bottom"
+                      to="/admin-page"
+                  >
+                      Admin
+                  </Link>
+        }
+    }
+    else return <div></div>
+  }
+}
+
 const mapStateToProps = (state) => {
   return {
     BookCart: state.BookCart,
@@ -216,6 +257,9 @@ const mapDispatchToProps = dispatch =>{
   return {
     actLogOut: () =>{
       dispatch(actLogout())
+    },
+    actReloadBookCart : () =>{
+      dispatch(reloadCart())
     }
   }
 }

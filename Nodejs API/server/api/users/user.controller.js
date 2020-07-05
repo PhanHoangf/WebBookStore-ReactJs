@@ -32,6 +32,19 @@ module.exports = {
             });
         })
     },
+    getUserByUsername: (req, res) =>{
+        const body = req.body;
+        getUserByUsername(body.username,(err, results)=>{
+            if(err){
+                console.log(err);
+                return;
+            }
+            return  res.json({
+                success: 0,
+                data: results
+            });
+        })
+    },
     userLogin: (req, res) =>{
         const body = req.body;
         getUserByUsername(body.username,(err, results)=>{
