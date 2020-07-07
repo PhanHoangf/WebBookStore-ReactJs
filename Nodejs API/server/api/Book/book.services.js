@@ -11,7 +11,7 @@ bookdb.getBook = callback =>{
     });
 }
 
-bookdb.getBookById = (data, callback) => {
+bookdb.getBookById = (Id, callback) => {
     pool.query(
         'call USP_Get_Book_By_Id(?)',
         [Id],

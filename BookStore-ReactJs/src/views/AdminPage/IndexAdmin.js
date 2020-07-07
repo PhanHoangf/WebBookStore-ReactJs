@@ -86,10 +86,7 @@ class IndexAdmin extends Component {
             this.setState({
                 Book : book,
                 setUpdateModal: params
-            },()=>{
-                console.log(this.state.Book)
             })
-            
         }
         const setAddBookModal = (params) =>{
             this.setState({
@@ -214,17 +211,32 @@ class IndexAdmin extends Component {
                             </Col>
                         </Row>
                     </Container>
-                    <UpdateBookModal 
+                    {/* <UpdateBookModal 
                         setModal = {this.state.setUpdateModal} 
                         onSetUpdateModal = {this.onSetUpdateModal}
                         book = {this.state.Book}                   
-                    />
+                    /> */}
+                    {openUpdateBookModal(this.state.setUpdateModal,this.onSetUpdateModal,this.state.Book,this.props.Category,this.props.AllAuthor)}
                     <AddBookModal setModal = { this.state.setModal } onSetModal = {this.onSetModal} />
                 </div>
             </>
         )
     }
 }
+
+const openUpdateBookModal = (setModal, onSetUpdateModal, book, category, author) =>{
+    if(setModal){
+        console.log('a')
+        return <UpdateBookModal 
+                    setModal = { setModal } 
+                    onSetUpdateModal = { onSetUpdateModal } 
+                    book = { book } 
+                    category = { category }
+                    author = { author }
+                />
+    }
+}
+
 const mapStateToProps = state =>{
     return {
         AllBook: state.AllBook,

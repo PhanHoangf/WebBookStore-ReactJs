@@ -38,6 +38,10 @@ import { actLogout } from "redux/actions/FetchUserData";
 import jwt from 'jsonwebtoken'
 import { reloadCart } from "redux/actions/Cart";
 import { isEmpty } from "lodash";
+import {ReactComponent as LoginIcon} from '../../assets/img/login.svg'
+import {ReactComponent as LogoutIcon} from '../../assets/img/logout.svg'
+import {ReactComponent as HeartIcon} from '../../assets/img/heart.svg'
+import {ReactComponent as AdminIcon} from '../../assets/img/admin.svg'
 // helper function
 const ShowQuantity = (cart) => {
   var result = 0;
@@ -79,11 +83,6 @@ function IndexNavbar(props) {
     window.location.reload(false);
   }
 
-  const updateState = (params) =>{
-    if(localStorage.getItem('jwtToken') !== null){
-      setReload(params)
-    }
-  };
   
   const toggleNavbarCollapse = () => {
     setNavbarCollapse(!navbarCollapse);
@@ -190,13 +189,19 @@ function IndexNavbar(props) {
                             to="/login-page"
                             style = { ( localStorage.getItem('jwtToken') !== null ) ? { pointerEvents: "none" } : {} }
                         >
+                            <LoginIcon style={{width:'25px', height:'25px'}} />&nbsp;
                             Login
                         </Link>
                         {LinkToAdminPage()}
                         <DropdownItem
                             onClick={onclicked}
                         >
+                            <LogoutIcon style={{width:'25px', height:'25px'}} />&nbsp;
                             Log out
+                        </DropdownItem>
+                        <DropdownItem >
+                            <HeartIcon style={{width:'25px', height:'25px'}} />&nbsp;
+                            Favorite list
                         </DropdownItem>
                 </DropdownMenu>
               </UncontrolledDropdown>
@@ -239,6 +244,7 @@ const LinkToAdminPage = () =>{
                       data-placement="bottom"
                       to="/admin-page"
                   >
+                      <AdminIcon style={{width:'25px', height:'25px'}} />&nbsp;
                       Admin
                   </Link>
         }
@@ -250,6 +256,7 @@ const LinkToAdminPage = () =>{
 const mapStateToProps = (state) => {
   return {
     BookCart: state.BookCart,
+    Favorite: state.Favorite
   };
 };
 

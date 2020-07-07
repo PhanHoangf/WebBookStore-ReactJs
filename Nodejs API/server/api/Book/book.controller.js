@@ -62,10 +62,16 @@ bookController.updateBook = (req, res) => {
                 message: "Database connection error"
             });
         }
-        return res.status(200).json({
-            success: 1,
-            message: "Update successfully"
-        });
+        getBook((err,results)=>{
+            if(err){
+                console.log(err);
+                return;
+            }
+            return res.status(200).json({
+                success: 1,
+                data: results
+            });
+        })
     })
 }
 bookController.deleteBook = (req, res) =>{

@@ -1,4 +1,4 @@
-import { FETCH_BOOKDATA, ADD_BOOK } from './../actiontypes/ActionTypes'
+import { FETCH_BOOKDATA, ADD_BOOK, UPDATE_BOOK } from './../actiontypes/ActionTypes'
 import CallApi from 'Utils/ApiCaller'
 
 export const actFetchAllBookData = (book) =>{
@@ -27,6 +27,23 @@ export const actAddBookRequest = book =>{
 export const actAddBook = (book) =>{
     return {
         type: ADD_BOOK,
+        book
+    }
+}
+
+export const actUpdateBookRequest = (book) =>{
+    return dispatch =>{
+        return CallApi('allbook','PATCH', book).then(response => {
+            if(response.message === 1){
+                dispatch(actUpdateBook(response.data))
+            }
+        })
+    }
+}
+
+export const actUpdateBook = (book) =>{
+    return {
+        type: UPDATE_BOOK,
         book
     }
 }

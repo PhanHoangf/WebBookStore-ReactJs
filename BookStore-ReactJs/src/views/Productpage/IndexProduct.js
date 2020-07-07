@@ -22,8 +22,6 @@ import { connect } from 'react-redux'
 import { actFetchAllBookDataRequest } from 'redux/actions/FetchBookData'
 import { actAddToCart } from 'redux/actions/Cart'
 import DemoFooter from 'components/Footers/DemoFooter'
-import { isEmpty } from 'lodash'
-import BookCart from 'redux/reducers/BookCart'
 
 
 class IndexProduct extends Component {
@@ -62,7 +60,8 @@ class IndexProduct extends Component {
                     Quote:"“No pen no gain.”",
                     Author:"- Huan Rose -"
                 }
-            ]
+            ],
+            isFavorite: false,
         }
     }
     componentDidMount(){
@@ -76,13 +75,14 @@ class IndexProduct extends Component {
     }
     test(){
         console.log(document.getElementById('exampleRadios1').checked);
-   }
+    }
+    toggle = () =>{
+        this.setState({
+            isFavorite: !this.state.isFavorite
+        })
+    }
     render() {
         var data = this.props.AllBook
-        var { BookCart } = this.props
-        // do {
-        //     window.location.reload()
-        // }while(isEmpty(BookCart))
         const elm = data.map((book,index)=>{
             return <Col key={book.bookID}>
                         <Card style={{width: '20rem'}}>
@@ -98,6 +98,9 @@ class IndexProduct extends Component {
                                 <CardText></CardText>
                                 <Button onClick = {() => this.addToCart(book)} color="success" className="btn-icon btn-round">
                                     <i className="fa fa-shopping-cart"></i>
+                                </Button>&nbsp;
+                                <Button color="info" className="btn-icon btn-round" onClick={this.toggle}>
+                                    <i className="fa fa-heart" style={(this.state.isFavorite)?{color:'red'}:{color:''}} ></i>
                                 </Button>
                             </CardBody>
                         </Card>
@@ -232,7 +235,6 @@ const RandomQoutes = (store) =>{
 const mapStateToProps = state =>{
     return {
         AllBook : state.AllBook,
-        BookCart : state.BookCart
     }
 }
 
