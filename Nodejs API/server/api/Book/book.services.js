@@ -82,7 +82,7 @@ bookdb.deleteBook = (data, callback) =>{
 bookdb.searchBook = (data, callback) => {
     pool.query(
         "CALL find_book(?)",
-        [data.keyWord],
+        [data],
         (err, results, fields) => {
             if(err){
                 return callback(err)

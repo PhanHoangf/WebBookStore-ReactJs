@@ -42,6 +42,7 @@ import {ReactComponent as LoginIcon} from '../../assets/img/login.svg'
 import {ReactComponent as LogoutIcon} from '../../assets/img/logout.svg'
 import {ReactComponent as HeartIcon} from '../../assets/img/heart.svg'
 import {ReactComponent as AdminIcon} from '../../assets/img/admin.svg'
+import SearchBar from "components/SearchBar/SearchBar";
 // helper function
 const ShowQuantity = (cart) => {
   var result = 0;
@@ -143,6 +144,7 @@ function IndexNavbar(props) {
             <span className="navbar-toggler-bar bar3" />
           </button>
         </div>
+        <SearchBar />
         <Collapse
           className="justify-content-end"
           navbar
@@ -210,6 +212,7 @@ function IndexNavbar(props) {
                 className="nav-link"
                 data-placement="bottom"
                 to="/register-page"
+                style = { ( localStorage.getItem('jwtToken') !== null ) ? { pointerEvents: "none" } : {} }
               >
                 <i className="fa fa-key"></i>
                 Register

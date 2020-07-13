@@ -95,8 +95,8 @@ bookController.deleteBook = (req, res) =>{
 }
 
 bookController.searchBook = (req, res) => {
-    const body = req.body
-    searchBook(body, (err, results)=>{
+    const keyWord = req.params.keyWord
+    searchBook(keyWord, (err, results)=>{
         if(err){
             console.log(err)
             return;

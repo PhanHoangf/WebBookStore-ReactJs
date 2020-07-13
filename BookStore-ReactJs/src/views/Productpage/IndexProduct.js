@@ -16,12 +16,19 @@ import {
     DropdownMenu,
     DropdownItem,
     Label,
-    Input
+    Input,
+    InputGroup,
+    InputGroupAddon,
+    InputGroupText
 } from 'reactstrap'
 import { connect } from 'react-redux'
 import { actFetchAllBookDataRequest } from 'redux/actions/FetchBookData'
 import { actAddToCart } from 'redux/actions/Cart'
 import DemoFooter from 'components/Footers/DemoFooter'
+import { Link } from 'react-router-dom'
+import { actFetchCategoryDataRequest } from 'redux/actions/FetchCategoryData'
+import ProductByCategory from './ProductByCategory'
+
 
 
 class IndexProduct extends Component {
@@ -66,12 +73,7 @@ class IndexProduct extends Component {
     }
     componentDidMount(){
         this.props.fetchAllBook();
-        // window.location.reload(false)
-    }
-
-
-    addToCart = book =>{
-        this.props.onAddToCart(book)
+        this.props.fetchCategory();
     }
     test(){
         console.log(document.getElementById('exampleRadios1').checked);
@@ -82,30 +84,18 @@ class IndexProduct extends Component {
         })
     }
     render() {
+        var { url } = this.props.match
         var data = this.props.AllBook
-        const elm = data.map((book,index)=>{
-            return <Col key={book.bookID}>
-                        <Card style={{width: '20rem'}}>
-                            <CardImg 
-                                top 
-                                src={book.bookImage} 
-                                alt="..."/>
-                            <CardBody style={{height:"296px"}}>
-                                <CardTitle><h3>{book.title}</h3></CardTitle>
-                                <br></br>
-                                <CardText className="card-text">Author: {book.name}</CardText>
-                                <CardText className="card-text">Price: {book.price} $</CardText>
-                                <CardText></CardText>
-                                <Button onClick = {() => this.addToCart(book)} color="success" className="btn-icon btn-round">
-                                    <i className="fa fa-shopping-cart"></i>
-                                </Button>&nbsp;
-                                <Button color="info" className="btn-icon btn-round" onClick={this.toggle}>
-                                    <i className="fa fa-heart" style={(this.state.isFavorite)?{color:'red'}:{color:''}} ></i>
-                                </Button>
-                            </CardBody>
-                        </Card>
-                </Col>
+        var {Category} = this.props
+        var item = Category.map((category,index)=>{
+                    return <ProductByCategory 
+                                    key = {category.categoryID}
+                                    category = {category.categoryName}
+                                    books = {data}
+                                    url = {url}
+                            />
         })
+        
         return (
             <>
                 <IndexNavbar />
@@ -135,83 +125,49 @@ class IndexProduct extends Component {
                     </Row>
                     <Row>
                         <Col>
-                            <UncontrolledDropdown className="btn-group">
-                                <DropdownToggle
-                                aria-expanded={false}
-                                aria-haspopup={true}
-                                caret
-                                color="secondary"
-                                data-toggle="dropdown"
-                                type="button"
-                                >
-                                Category
-                                </DropdownToggle>
-                                <DropdownMenu>
-                                <DropdownItem href="#pablo" onClick={e => e.preventDefault()}>
-                                    Action
-                                </DropdownItem>
-                                <DropdownItem href="#pablo" onClick={e => e.preventDefault()}>
-                                    Another action
-                                </DropdownItem>
-                                <DropdownItem href="#pablo" onClick={e => e.preventDefault()}>
-                                    Something else here
-                                </DropdownItem>
-                                <DropdownItem divider />
-                                <DropdownItem href="#pablo" onClick={e => e.preventDefault()}>
-                                    Separated link
-                                </DropdownItem>
-                                </DropdownMenu>
-                            </UncontrolledDropdown>
+                           
                         </Col>
                         <Col >
-                            <h6>Sort by name</h6>
-                            <div className="form-check-radio">
-                                <Label check>
-                                <Input type="radio" name="sortByNameRadios" id="exampleRadios1" value="option1"defaultChecked/>
-                                    A to Z
-                                <span className="form-check-sign"></span>
-                                </Label>
-                            </div>
-                            <div className="form-check-radio">
-                                <Label check>
-                                <Input type="radio" name="sortByNameRadios" id="exampleRadios2" value="option2" />
-                                    Z to A
-                                <span className="form-check-sign"></span>
-                                </Label>
-                            </div>
-                        </Col>
-                        <Col>
-                            <h6>Sort by price</h6>
-                            <div className="form-check-radio">
-                                    <Label check>
-                                        <Input type="radio" name="exampleRadios" id="exampleRadios1" value="option3" defaultChecked/>
-                                        High to low
+                            <Row>
+                                <Col>
+                                    <h6>Sort by name</h6>
+                                    <div className="form-check-radio">
+                                        <Label check>
+                                        <Input type="radio" name="sortByNameRadios" id="exampleRadios1" value="option1"defaultChecked/>
+                                            A to Z
                                         <span className="form-check-sign"></span>
-                                    </Label>
-                                </div>
-                                <div className="form-check-radio">
-                                    <Label check>
-                                    <Input type="radio" name="exampleRadios" id="exampleRadios2" value="option4" />
-                                    Low to high
-                                    <span className="form-check-sign"></span>
-                                    </Label>
-                            </div>
-                        </Col>
-                        <Col style={{textAlign: "center"}}>
-                            <Button color="success" style={{marginBottom:"5px"}} onClick={this.test}>
-                                <i className="fa fa-search"></i>
-                                Search
-                            </Button>
-                            <br />
-                            <Button color="primary">
-                                Refresh
-                            </Button>
+                                        </Label>
+                                    </div>
+                                    <div className="form-check-radio">
+                                        <Label check>
+                                        <Input type="radio" name="sortByNameRadios" id="exampleRadios2" value="option2" />
+                                            Z to A
+                                        <span className="form-check-sign"></span>
+                                        </Label>
+                                    </div>
+                                </Col>
+                                <Col>
+                                    <h6>Sort by price</h6>
+                                    <div className="form-check-radio">
+                                            <Label check>
+                                                <Input type="radio" name="exampleRadios" id="exampleRadios1" value="option3" defaultChecked/>
+                                                High to low
+                                                <span className="form-check-sign"></span>
+                                            </Label>
+                                        </div>
+                                        <div className="form-check-radio">
+                                            <Label check>
+                                            <Input type="radio" name="exampleRadios" id="exampleRadios2" value="option4" />
+                                            Low to high
+                                            <span className="form-check-sign"></span>
+                                            </Label>
+                                    </div>
+                                </Col>
+                            </Row>
                         </Col>
                     </Row>
                     <hr></hr>
-                    <Row>
-                       {elm}
-                    </Row>
+                    {item}
                     </Container>
                 </div>
                 <DemoFooter />
@@ -235,6 +191,7 @@ const RandomQoutes = (store) =>{
 const mapStateToProps = state =>{
     return {
         AllBook : state.AllBook,
+        Category : state.Category
     }
 }
 
@@ -243,8 +200,8 @@ const mapDispatchToProps = dispatch =>{
         fetchAllBook : () =>{
             dispatch(actFetchAllBookDataRequest())
         },
-        onAddToCart: (book)=>{
-            dispatch(actAddToCart(book,1))
+        fetchCategory: ()=>{
+            dispatch(actFetchCategoryDataRequest())
         }
     }
 }
