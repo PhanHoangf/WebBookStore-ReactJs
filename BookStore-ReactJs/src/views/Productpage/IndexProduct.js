@@ -5,29 +5,17 @@ import {
     Container, 
     Row, 
     Col, 
-    Button, 
-    Card,
-    CardImg, 
-    CardBody, 
-    CardTitle, 
-    CardText, 
-    UncontrolledDropdown,
-    DropdownToggle,
-    DropdownMenu,
-    DropdownItem,
     Label,
     Input,
-    InputGroup,
-    InputGroupAddon,
-    InputGroupText
 } from 'reactstrap'
 import { connect } from 'react-redux'
 import { actFetchAllBookDataRequest } from 'redux/actions/FetchBookData'
-import { actAddToCart } from 'redux/actions/Cart'
 import DemoFooter from 'components/Footers/DemoFooter'
-import { Link } from 'react-router-dom'
 import { actFetchCategoryDataRequest } from 'redux/actions/FetchCategoryData'
 import ProductByCategory from './ProductByCategory'
+
+//services
+import GetRandomQoutes from 'services/GetRandomQuotes'
 
 
 
@@ -95,97 +83,85 @@ class IndexProduct extends Component {
                                     url = {url}
                             />
         })
-        
+        var quotes = GetRandomQoutes(this.state.Quotes)
         return (
             <>
                 <IndexNavbar />
                 <LandingPageHeader />
                 <div className="section profile-content" >
                     <Container>
-                    <div className="owner">
-                        <div className="avatar">
-                        <img
-                            alt="library"
-                            className="img-rounded img-no-padding img-responsive"
-                            src={require("assets/img/library.png")}
-                        />
+                        <div className="owner">
+                            <div className="avatar">
+                            <img
+                                alt="library"
+                                className="img-rounded img-no-padding img-responsive"
+                                src={require("assets/img/library.png")}
+                            />
+                            </div>
+                            <div className="name">
+                            <h3 className="title">
+                                Book Shelf <br />
+                            </h3>
+                            </div>
                         </div>
-                        <div className="name">
-                        <h3 className="title">
-                            Book Shelf <br />
-                        </h3>
-                        </div>
-                    </div>
-                    <Row>
-                        <Col className="ml-auto mr-auto text-center" md="6">
-                        {RandomQoutes(this.state.Quotes)}
-                        <br />
-                        <br />
-                        </Col>
-                    </Row>
-                    <Row>
-                        <Col>
-                           
-                        </Col>
-                        <Col >
-                            <Row>
-                                <Col>
-                                    <h6>Sort by name</h6>
-                                    <div className="form-check-radio">
-                                        <Label check>
-                                        <Input type="radio" name="sortByNameRadios" id="exampleRadios1" value="option1"defaultChecked/>
-                                            A to Z
-                                        <span className="form-check-sign"></span>
-                                        </Label>
-                                    </div>
-                                    <div className="form-check-radio">
-                                        <Label check>
-                                        <Input type="radio" name="sortByNameRadios" id="exampleRadios2" value="option2" />
-                                            Z to A
-                                        <span className="form-check-sign"></span>
-                                        </Label>
-                                    </div>
-                                </Col>
-                                <Col>
-                                    <h6>Sort by price</h6>
-                                    <div className="form-check-radio">
+                        <Row>
+                            <Col className="ml-auto mr-auto text-center" md="6">
+                            <p>{quotes.Quote} <br />
+                                <strong>{quotes.Author}</strong>
+                            </p>
+                            <br />
+                            <br />
+                            </Col>
+                        </Row>
+                        <Row>
+                            <Col></Col>
+                            <Col >
+                                <Row>
+                                    <Col>
+                                        <h6>Sort by name</h6>
+                                        <div className="form-check-radio">
                                             <Label check>
-                                                <Input type="radio" name="exampleRadios" id="exampleRadios1" value="option3" defaultChecked/>
-                                                High to low
-                                                <span className="form-check-sign"></span>
+                                            <Input type="radio" name="sortByNameRadios" id="exampleRadios1" value="option1"defaultChecked/>
+                                                A to Z
+                                            <span className="form-check-sign"></span>
                                             </Label>
                                         </div>
                                         <div className="form-check-radio">
                                             <Label check>
-                                            <Input type="radio" name="exampleRadios" id="exampleRadios2" value="option4" />
-                                            Low to high
+                                            <Input type="radio" name="sortByNameRadios" id="exampleRadios2" value="option2" />
+                                                Z to A
                                             <span className="form-check-sign"></span>
                                             </Label>
-                                    </div>
-                                </Col>
-                            </Row>
-                        </Col>
-                    </Row>
-                    <hr></hr>
-                    {item}
+                                        </div>
+                                    </Col>
+                                    <Col>
+                                        <h6>Sort by price</h6>
+                                        <div className="form-check-radio">
+                                                <Label check>
+                                                    <Input type="radio" name="exampleRadios" id="exampleRadios1" value="option3" defaultChecked/>
+                                                    High to low
+                                                    <span className="form-check-sign"></span>
+                                                </Label>
+                                            </div>
+                                            <div className="form-check-radio">
+                                                <Label check>
+                                                <Input type="radio" name="exampleRadios" id="exampleRadios2" value="option4" />
+                                                Low to high
+                                                <span className="form-check-sign"></span>
+                                                </Label>
+                                        </div>
+                                    </Col>
+                                </Row>
+                            </Col>
+                        </Row>
+                        <hr></hr>
+                        {item}
                     </Container>
                 </div>
                 <DemoFooter />
             </>
         )
     }
-}
-
-const RandomQoutes = (store) =>{
-    var result = null;
-    if(store.length > 0){
-        var rand = Math.floor((Math.random() * store.length) + 0);
-        result = store[rand];
-    }
-    return  <p key={result.id}>
-                {result.Quote}<br />
-                <strong> {result.Author} </strong>
-            </p>
 }
 
 const mapStateToProps = state =>{

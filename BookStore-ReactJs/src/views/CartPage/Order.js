@@ -65,11 +65,6 @@ class Order extends Component {
                 <tbody>
                     {item}
                 </tbody>
-                {/* <OrderDetailModal 
-                    setOpenDetail = {this.state.setOpenDetailModal} 
-                    setOffDetail = {this.setOffDetailModal} 
-                    orderID = {this.state.orderID}
-                /> */}
                 {showOrderDetailModal(detailParams)}
             </React.Fragment>
         )

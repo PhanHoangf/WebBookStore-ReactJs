@@ -42,6 +42,7 @@ import {ReactComponent as LoginIcon} from '../../assets/img/login.svg'
 import {ReactComponent as LogoutIcon} from '../../assets/img/logout.svg'
 import {ReactComponent as HeartIcon} from '../../assets/img/heart.svg'
 import {ReactComponent as AdminIcon} from '../../assets/img/admin.svg'
+import {ReactComponent as UserIcon} from '../../assets/img/user.svg'
 import SearchBar from "components/SearchBar/SearchBar";
 // helper function
 const ShowQuantity = (cart) => {
@@ -251,6 +252,14 @@ const LinkToAdminPage = () =>{
                       Admin
                   </Link>
         }
+        else return <Link
+                        className="dropdown-item"
+                        data-placement="bottom"
+                        to=""
+                    >
+                        <UserIcon style={{width:'25px', height:'25px'}} />&nbsp;
+                        User info
+                    </Link>
     }
     else return <div></div>
   }
