@@ -26,7 +26,6 @@ export default class Home extends React.Component {
         return (
             <BrowserRouter>
                 <Switch>
-                {/* <Route path="/index" render={props => <Index {...props} />} /> */}
                 <Route path="/" exact >
                     <Index />
                 </Route>

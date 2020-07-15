@@ -8,7 +8,6 @@ import AddBookModal from 'views/Modal/AddBookModal'
 import { actFetchAuthorDataRequest } from 'redux/actions/FetchAuthorData'
 import AuthorLayout from './AuthorLayout'
 import UpdateBookModal from 'views/Modal/UpdateBookModal'
-import { transpileModule } from 'typescript'
 import { actFetchCategoryDataRequest } from 'redux/actions/FetchCategoryData'
 
 class IndexAdmin extends Component {

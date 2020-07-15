@@ -7,7 +7,6 @@ import {
 } from "reactstrap";
 import CallApi from 'Utils/ApiCaller';
 import CheckPass from 'services/CheckPass';
-import { result } from 'lodash';
 import SuccessModal from 'views/Modal/SuccessModal';
 
 class UserInfo extends Component {
