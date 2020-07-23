@@ -9,6 +9,7 @@ import { actFetchAuthorDataRequest } from 'redux/actions/FetchAuthorData'
 import AuthorLayout from './AuthorLayout'
 import UpdateBookModal from 'views/Modal/UpdateBookModal'
 import { actFetchCategoryDataRequest } from 'redux/actions/FetchCategoryData'
+import AddAuthorModal from 'views/Modal/AddAuthorModal'
 
 class IndexAdmin extends Component {
     constructor(props){
@@ -19,7 +20,8 @@ class IndexAdmin extends Component {
             isOpen:false,
             setModal:false,
             setUpdateModal : false,
-            Book : null
+            Book : null,
+            setAuthorModal: false
         }
     }
     componentDidMount(){
@@ -27,6 +29,13 @@ class IndexAdmin extends Component {
         this.props.fetchAllAuthor()
         this.props.fetchCategory()
     }
+
+    onSetAuthorModal = value =>{
+        this.setState({
+            setAuthorModal : value
+        })
+    }
+
     onSetModal = value =>{
         this.setState({
             setModal : value
@@ -92,6 +101,11 @@ class IndexAdmin extends Component {
                 setModal : params
             })
         }
+        const setAddAuthorModal = (params) =>{
+            this.setState({
+                setAuthorModal : params
+            })
+        }
         return (
             <>
                 <IndexNavbar />
@@ -138,9 +152,9 @@ class IndexAdmin extends Component {
                                                 
                                                 <br />
                                                 <Button 
-                                                    style={{marginBottom:"5px"}} 
-                                                    href="/#" 
+                                                    style={{marginBottom:"5px"}}
                                                     color="primary"
+                                                    onClick={() => setAddAuthorModal(true)}
                                                 >
                                                         Add Author
                                                 </Button>
@@ -217,6 +231,7 @@ class IndexAdmin extends Component {
                     /> */}
                     {openUpdateBookModal(this.state.setUpdateModal,this.onSetUpdateModal,this.state.Book,this.props.Category,this.props.AllAuthor)}
                     <AddBookModal setModal = { this.state.setModal } onSetModal = {this.onSetModal} />
+                    <AddAuthorModal setAuthorModal = {this.state.setAuthorModal} onSetAuthorModal = {this.onSetAuthorModal} />
                 </div>
             </>
         )

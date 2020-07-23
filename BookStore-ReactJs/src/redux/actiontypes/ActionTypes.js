@@ -14,3 +14,37 @@ export const LOG_OUT = "LOG_OUT"
 export const RELOAD_CART = "RELOAD_CART"
 export const ADD_TO_FAVORITE = "ADD_TO_FAVORITE"
 export const DELETE_FROM_FAVORITE = "DELETE_FROM_FAVORITE"
+export const ADD_AUTHOR = "ADD_AUTHOR"
+
+export const QOUTES = [ 
+    {
+        id:1,
+        Quote: "“Many people, myself among them, feel better at the mere sight of a book.”",
+        Author: "- Jane Smiley -"
+    },
+    {
+        id:2,
+        Quote: "“′Classic′ – a book which people praise and don’t read.”",
+        Author: "- Mark Twain -"
+    },
+    {
+        id:3,
+        Quote: "“Sleep is good, he said, and books are better.”",
+        Author: "- George R.R. Martin -"
+    },
+    {
+        id:4,
+        Quote: "“The library is inhabited by spirits that come out of the pages at night.”",
+        Author: "- Isabel Allende -"
+    },
+    {
+        id:5,
+        Quote: "“Rainy days should be spent at home with a cup of tea and a good book.”",
+        Author: "- Bill Patterson -"
+    },
+    {
+        id:6,
+        Quote:"“No pen no gain.”",
+        Author:"- Huan Rose -"
+    }
+]

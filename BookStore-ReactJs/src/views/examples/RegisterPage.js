@@ -111,7 +111,6 @@ class RegisterPage extends React.Component {
     const { isPasswordShow } = this.state;
     return (
       <>
-        <IndexNavbar />
         <div
           className="page-header"
           style={{

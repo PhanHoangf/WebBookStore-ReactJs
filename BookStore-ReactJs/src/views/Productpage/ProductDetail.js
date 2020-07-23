@@ -39,8 +39,6 @@ class ProductDetail extends Component {
                                 className="owner" 
                                 style={
                                     {   
-                                        // borderBottom:'1px solid #cec7c7',
-                                        // borderRight:'1px solid #cec7c7',
                                         padding:'0px 0px 10px 10px',
                                         margin:'0px 0px 20px 20px',
                                         background:'#f3f3f3'
@@ -62,14 +60,11 @@ class ProductDetail extends Component {
                                 <div style={{width:'540px',height:'270px'}}>
                                     <p className="h2 title">Title: {this.state.bookInfo.title}</p>
                                     <hr></hr>
-                                    <p className="h6" style={{fontSize:'15px'}}>{this.state.bookInfo.name}</p>
-                                    <p className="h6" style={{fontSize:'15px'}}>{this.state.bookInfo.price}$</p>
+                                    <p className="h6" style={{fontSize:'15px'}}>Author: {this.state.bookInfo.name}</p>
+                                    <p className="h6" style={{fontSize:'15px'}}>Price: {this.state.bookInfo.price}$</p>
                                     <Button onClick = {() => this.addToCart(this.state.bookInfo)} color="success" className="btn-icon btn-round">
                                         <i className="fa fa-shopping-cart"></i>
                                     </Button>&nbsp;
-                                    <Button color="info" className="btn-icon btn-round">
-                                        <i className="fa fa-heart" style={(this.state.isFavorite)?{color:'red'}:{color:''}} ></i>
-                                    </Button>
                                 </div>
                             </Col>
                         </Row>

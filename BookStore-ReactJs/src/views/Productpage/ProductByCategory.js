@@ -29,15 +29,13 @@ class ProductByCategory extends Component {
                                     <Button onClick = {() => this.addToCart(book)} color="success" className="btn-icon btn-round">
                                         <i className="fa fa-shopping-cart"></i>
                                     </Button>&nbsp;
-                                    {/* <Button color="info" className="btn-icon btn-round" onClick={this.toggle}>
-                                        <i className="fa fa-heart" style={(this.state.isFavorite)?{color:'red'}:{color:''}} ></i>
-                                    </Button> */}
                                 </CardBody>
                             </Card>
                         </Col>
             }
         )
-        if(elm.length > 0){
+        if(!isEmpty(elm)){
+            console.log('a')
             return (
                 <div>
                     <Row>
@@ -50,6 +48,7 @@ class ProductByCategory extends Component {
             )
         }
         else{
+            console.log('b')
             return <div></div>
         }
     }
