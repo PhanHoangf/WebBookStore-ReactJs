@@ -46,6 +46,7 @@ export default class Home extends React.Component {
                 <Route path="/login-page">
                     <SectionLogin />
                 </Route>
+                <Route path = "/cate/:name" component = {IndexProduct}></Route>
                 <Route path = "/product-page/:id" component = {ProductDetail}></Route>
                 <Route path= "/product-page" component = {IndexProduct}>
                 </Route>

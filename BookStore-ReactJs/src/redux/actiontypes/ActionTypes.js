@@ -15,6 +15,7 @@ export const RELOAD_CART = "RELOAD_CART"
 export const ADD_TO_FAVORITE = "ADD_TO_FAVORITE"
 export const DELETE_FROM_FAVORITE = "DELETE_FROM_FAVORITE"
 export const ADD_AUTHOR = "ADD_AUTHOR"
+export const GET_BOOK_BY_CATEGORY = "GET_BOOK_BY_CATEGORY"
 
 export const QOUTES = [ 
     {

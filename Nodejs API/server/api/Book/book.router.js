@@ -11,6 +11,6 @@ router.get('/bookdetail/:id',getBookById)
 
 router.post('/', createBook);
 router.patch('/',updateBookValidation,updateBook);
-router.delete('/', deleteBook);
+// router.delete('/deletebook/:id', deleteBook);
 
 module.exports = router 

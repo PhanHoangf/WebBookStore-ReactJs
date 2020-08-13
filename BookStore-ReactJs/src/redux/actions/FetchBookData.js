@@ -1,4 +1,4 @@
-import { FETCH_BOOKDATA, ADD_BOOK, UPDATE_BOOK } from './../actiontypes/ActionTypes'
+import { FETCH_BOOKDATA, ADD_BOOK, UPDATE_BOOK, GET_BOOK_BY_CATEGORY} from './../actiontypes/ActionTypes'
 import CallApi from 'Utils/ApiCaller'
 import { isEmpty } from 'lodash'
 
@@ -14,6 +14,13 @@ export const actFetchAllBookDataRequest = () =>{
         return CallApi('allbook','GET',null).then(response =>{
             dispatch(actFetchAllBookData(response.data))
         })
+    }
+}
+
+export const actGetBookByCategory = (category) => {
+    return {
+        type: GET_BOOK_BY_CATEGORY,
+        category
     }
 }
 
@@ -64,3 +71,4 @@ export const actSearchBookRequest = keyWord =>{
         }
     }
 }
+

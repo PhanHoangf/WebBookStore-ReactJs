@@ -74,25 +74,26 @@ bookController.updateBook = (req, res) => {
         })
     })
 }
-bookController.deleteBook = (req, res) =>{
-    const body = req.body
-    deleteBook(body, (err, results)=>{
-        if(err){
-            console.log(err);
-            return;
-        }
-        if(!results){
-            return  res.json({
-                success: 0,
-                message: "Record not found"
-            });
-        }
-        return res.json({
-            success: 1,
-            message: "book deleted successfully"
-        });
-    })
-}
+
+// bookController.deleteBook = (req, res) =>{
+//     const id = req.params.id
+//     deleteBook(id, (err, results)=>{
+//         if(err){
+//             console.log(err);
+//             return;
+//         }
+//         if(!results){
+//             return  res.json({
+//                 success: 0,
+//                 message: "Record not found"
+//             });
+//         }
+//         return res.json({
+//             success: 1,
+//             message: "book deleted successfully"
+//         });
+//     })
+// }
 
 bookController.searchBook = (req, res) => {
     const keyWord = req.params.keyWord

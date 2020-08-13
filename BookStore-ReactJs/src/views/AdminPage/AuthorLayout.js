@@ -2,6 +2,9 @@ import React, { Component } from 'react'
 import { Button } from 'reactstrap'
 
 export default class AuthorLayout extends Component {
+    constructor(props) {
+        super(props)
+    }
     render() {
         var { allAuthor } = this.props
         const elm =  allAuthor.map((author, index)=>{
